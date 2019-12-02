@@ -21,7 +21,7 @@ description:         Please see the README on GitHub at <https://github.com/cmal
 
 dependencies:
 - base >= 4.7 && < 5
-
+  
 library:
   source-dirs: src
 
@@ -46,3 +46,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - cis194
+    - hspec
