@@ -1,4 +1,4 @@
-module CardNumSpec (spec) where
+module W01CardNumSpec (spec) where
 
 import Test.Hspec
 import W01CardNum
