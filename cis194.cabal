@@ -1,0 +1,88 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: e0751213f0daa6fd5dd61600dcdaa2cdcf39957967edb3df6648b529f7497fd3
+
+name:           cis194
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/cmal/cis194#readme>
+homepage:       https://github.com/cmal/cis194#readme
+bug-reports:    https://github.com/cmal/cis194/issues
+author:         Yu Zhao
+maintainer:     zyzy5730@hotmail.com
+copyright:      MIT
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/cmal/cis194
+
+library
+  exposed-modules:
+      Lib
+      W01CardNum
+      W01Hanoi
+      Log
+      LogAnalysis
+      Golf
+      W04HigherOrder
+      ExprT
+      Parser
+      StackVM
+      W05Calc
+  other-modules:
+      Paths_cis194
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , utility-ht
+    , containers >=0.6.0.1
+    , numeric-prelude
+  default-language: Haskell2010
+
+executable cis194-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_cis194
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , cis194
+    , utility-ht
+    , containers >=0.6.0.1
+    , numeric-prelude
+  default-language: Haskell2010
+
+test-suite cis194-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      W01CardNumSpec
+      W01HanoiSpec
+      W02LogAnalysisSpec
+      W03GolfSpec
+      W04HigherOrderSpec
+      W05CalcSpec
+      Paths_cis194
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , cis194
+    , hspec
+    , utility-ht
+    , containers >=0.6.0.1
+    , numeric-prelude
+  default-language: Haskell2010
