@@ -40,7 +40,12 @@ library
       W05Calc
       W06Fibonacci
       Sized
+      Buffer
+      Editor
+      StringBuffer
       W07JoinList
+      Employee
+      W08Party
   other-modules:
       Paths_cis194
   hs-source-dirs:
@@ -83,6 +88,7 @@ test-suite cis194-test
       W05CalcSpec
       W06FibonacciSpec
       W07JoinListSpec
+      W08PartySpec
       Paths_cis194
   hs-source-dirs:
       test
