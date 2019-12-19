@@ -46,6 +46,7 @@ library
       W07JoinList
       Employee
       W08Party
+      W10AParser
   other-modules:
       Paths_cis194
   hs-source-dirs:
@@ -89,6 +90,7 @@ test-suite cis194-test
       W06FibonacciSpec
       W07JoinListSpec
       W08PartySpec
+      W10AParserSpec
       Paths_cis194
   hs-source-dirs:
       test
