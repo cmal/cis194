@@ -1,6 +1,8 @@
+# LANGUAGE InstanceSigs #
 module Typeclassopedia where
 
 -- exercises on haskell wiki typeclassopedia
+import Control.Applicative
 
 
 data Pair a = Pair a a
@@ -43,11 +45,13 @@ instance Functor ITree where
 
 
 sequenceAL :: Applicative f => [f a] -> f [a]
-sequenceAL [] = pure []
+-- sequenceAL [] = pure []
 -- sequenceAL (x:xs) = fmap (\x -> foldr collect x xs) wrap x
 --            where wrap x = (fmap (:) x <*> pure [])
 --                  collect x y = fmap (++) ... 不对
-sequenceAL xs = foldr (\x y -> (:) <$> x <*> y) (pure []) xs
+-- sequenceAL = foldr (\x y -> (:) <$> x <*> y) (pure [])
+sequenceAL = foldr (liftA2 (:)) (pure [])
+
 
 -- sequenceALMaybe :: [Maybe a] -> Maybe [a]
 -- sequenceALMaybe [] = Nothing
@@ -55,3 +59,20 @@ sequenceAL xs = foldr (\x y -> (:) <$> x <*> y) (pure []) xs
 
 -- (fmap (:) (Just 1) <*> pure []) :: Num a => Maybe [a]
 -- fmap (\x -> foldr (++) x []) (Just [1]) :: Num a => Maybe [a]
+
+
+
+-- some practice on the Class notes of Week 11
+
+(*>) :: Applicative f => f a -> f b -> f b
+(*>) = liftA2 (flip const)
+
+-- sequenceA :: Applicative f => [f a] -> f [a]
+-- sequenceA = foldr (liftA2 (:)) (pure [])
+
+mapA :: Applicative f => (a -> f b) -> ([a] -> f [b])
+mapA f xs = sequenceA (map f xs)
+
+
+replicateA :: Applicative f => Int -> f a -> f [a]
+replicateA n x = sequenceA $ take n $ repeat x

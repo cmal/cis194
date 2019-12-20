@@ -177,11 +177,13 @@ instance Applicative Parser where
 -- • Create a parser
 abParser :: Parser (Char, Char)
 -- -- newtype Parser a = Parser { runParser :: String -> Maybe (a, String) }
-abParser = (Parser a) <*> (Parser b)
-             where a ('a':s) = Just ((\b -> ('a', b)), s)
-                   a _ = Nothing
-                   b ('b':s) = Just ('b', s)
-                   b _ = Nothing
+-- abParser = (Parser a) <*> (Parser b)
+--              where a ('a':s) = Just ((\b -> ('a', b)), s)
+--                    a _ = Nothing
+--                    b ('b':s) = Just ('b', s)
+--                    b _ = Nothing
+abParser = (char 'a' *> pure (\b -> ('a', b))) <*> (char 'b' *> pure 'b')
+
 
 -- which expects to see the characters ’a’ and ’b’ and returns them
 -- as a pair. That is,
@@ -191,11 +193,8 @@ abParser = (Parser a) <*> (Parser b)
 -- Nothing
 -- • Now create a parser
 abParser_ :: Parser ()
-abParser_ = (Parser a) <*> (Parser b)
-              where a ('a':s) = Just ((\b -> ()), s)
-                    a _ = Nothing
-                    b ('b':s) = Just ('b', s)
-                    b _ = Nothing
+abParser_ = (char 'a' *> pure (\b -> ())) <*> (char 'b' *> pure 'b')
+
 -- which acts in the same way as abParser but returns () instead of
 -- the characters ’a’ and ’b’.
 
@@ -211,11 +210,11 @@ abParser_ = (Parser a) <*> (Parser b)
 -- Just ([12,34],"")
 
 intPair :: Parser [Integer]
-intPair = (Parser a) <*> (char ' ') <*> posInt
-          where a s = case runParser posInt s of
-                        Nothing -> Nothing
-                        Just (i, s') -> Just ((\w -> \j -> [i, j]), s')
-
+-- intPair = (Parser a) <*> (char ' ') <*> posInt
+--           where a s = case runParser posInt s of
+--                         Nothing -> Nothing
+--                         Just (i, s') -> Just ((\w -> \j -> [i, j]), s')
+intPair = (\i w j -> [i, j]) <$> posInt <*> (char ' ') <*> posInt
 
 -- Exercise 4
 -- Applicative by itself can be used to make parsers for simple, fixed
@@ -252,7 +251,7 @@ intPair = (Parser a) <*> (char ' ') <*> posInt
 -- (<|>) = undefined
 
 instance Alternative Parser where
-  empty = Parser { runParser = const Nothing }
+  empty = Parser $ const Nothing
   (Parser a) <|> (Parser b) = Parser x
     where x s = case a s of
                   Nothing -> b s
@@ -264,17 +263,18 @@ instance Alternative Parser where
 -- Implement a parser
 
 intParser :: Parser ()
-intParser = Parser { runParser = go }
-              where go s = case runParser posInt s of
-                             Just (_, s') -> Just ((), s')
-                             _ -> Nothing
+-- intParser = Parser go
+--               where go s = case runParser posInt s of
+--                              Just (_, s') -> Just ((), s')
+--                              _ -> Nothing
+intParser = const <$> pure () <*> posInt
 
 upperParser :: Parser ()
-upperParser = Parser { runParser = go }
-                where go s = case runParser (satisfy isUpper) s of
-                               Just (_, s') -> Just ((), s')
-                               _ -> Nothing
-
+-- upperParser = Parser { runParser = go }
+--                 where go s = case runParser (satisfy isUpper) s of
+--                                Just (_, s') -> Just ((), s')
+--                                _ -> Nothing
+upperParser = const <$> pure () <*> (satisfy isUpper)
 
 intOrUppercase :: Parser ()
 intOrUppercase = intParser <|> upperParser

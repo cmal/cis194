@@ -20,6 +20,10 @@ spec = do
     it "abParser_ success" $ do
       runParser abParser_ "abc" `shouldBe` Just ((), "c")
 
+  describe "intPair" $ do
+    it "12 34" $ do
+       runParser intPair "12 34" `shouldBe` Just ([12,34],"")
+
   describe "intOrUppercase" $ do
     it "342abcd" $ do
       runParser intOrUppercase "342abcd" `shouldBe` Just ((), "abcd")
