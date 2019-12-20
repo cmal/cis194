@@ -1,8 +1,8 @@
 module W02LogAnalysisSpec (spec) where
 
 import Test.Hspec
-import Log
-import LogAnalysis
+import W02Log
+import W02LogAnalysis
 
 main :: IO ()
 main = hspec spec

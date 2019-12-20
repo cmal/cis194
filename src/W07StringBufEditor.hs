@@ -1,7 +1,7 @@
 module Main where
 
-import StringBuffer
-import Editor
+import W07StringBuffer
+import W07Editor
 
 main = runEditor editor $ unlines
          [ "This buffer is for notes you don't want to save, and for"

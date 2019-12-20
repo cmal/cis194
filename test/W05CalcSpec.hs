@@ -2,9 +2,9 @@ module W05CalcSpec (spec) where
 
 import Test.Hspec
 import W05Calc
-import ExprT
-import Parser
--- import StackVM
+import W05ExprT
+import W05Parser
+-- import W05StackVM
 
 main :: IO ()
 main = hspec spec

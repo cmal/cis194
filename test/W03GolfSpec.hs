@@ -1,7 +1,7 @@
 module W03GolfSpec (spec) where
 
 import Test.Hspec
-import Golf
+import W03Golf
 
 main :: IO ()
 main = hspec spec

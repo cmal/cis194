@@ -1,7 +1,7 @@
 module W08PartySpec (spec) where
 
 import Test.Hspec
-import Employee
+import W08Employee
 import W08Party
 
 main :: IO ()

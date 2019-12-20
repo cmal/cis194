@@ -1,4 +1,4 @@
-module Employee where
+module W08Employee where
 
 import           Data.Tree
 

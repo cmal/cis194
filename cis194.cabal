@@ -30,21 +30,21 @@ library
       Lib
       W01CardNum
       W01Hanoi
-      Log
-      LogAnalysis
-      Golf
+      W02Log
+      W02LogAnalysis
+      W03Golf
       W04HigherOrder
-      ExprT
-      Parser
-      StackVM
+      W05ExprT
+      W05Parser
+      W05StackVM
       W05Calc
       W06Fibonacci
-      Sized
-      Buffer
-      Editor
-      StringBuffer
+      W07Sized
+      W07Buffer
+      W07Editor
+      W07StringBuffer
       W07JoinList
-      Employee
+      W08Employee
       W08Party
       W10AParser
       W11AParser

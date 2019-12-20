@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
-module LogAnalysis where
+module W02LogAnalysis where
 
-import Log
+import W02Log
 
 parseMessage :: String -> LogMessage
 parseMessage s =

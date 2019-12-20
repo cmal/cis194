@@ -1,6 +1,6 @@
 module W08Party where
 
-import Employee
+import W08Employee
 import Data.Tree
 
 -- Q1

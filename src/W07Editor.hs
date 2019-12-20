@@ -1,11 +1,11 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving
            , ScopedTypeVariables
    #-}
-module Editor where
+module W07Editor where
 
 import System.IO
 
-import Buffer
+import W07Buffer
 
 import Control.Exception
 import Control.Monad.State

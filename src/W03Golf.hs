@@ -1,4 +1,4 @@
-module Golf where
+module W03Golf where
 
 -- Rules refer to:
 -- https://www.seas.upenn.edu/~cis194/spring13/hw/03-rec-poly.pdf

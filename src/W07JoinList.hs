@@ -7,11 +7,11 @@
 
 module W07JoinList where
 
-import Sized
-import Buffer
+import W07Sized
+import W07Buffer
 import Data.Monoid
-import StringBuffer
-import Editor
+import W07StringBuffer
+import W07Editor
 -- import W07Scrabble
 
 -- data JoinListBasic a = Empty

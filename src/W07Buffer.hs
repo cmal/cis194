@@ -1,4 +1,4 @@
-module Buffer where
+module W07Buffer where
 
 -- Type class for data structures that can represent the text buffer
 -- of an editor.
