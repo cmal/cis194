@@ -47,6 +47,8 @@ library
       Employee
       W08Party
       W10AParser
+      W11AParser
+      W11SExpr
   other-modules:
       Paths_cis194
   hs-source-dirs:
@@ -92,6 +94,7 @@ test-suite cis194-test
       W08PartySpec
       W10AParserSpec
       Paths_cis194
+      W11SExprSpec
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N

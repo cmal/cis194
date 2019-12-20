@@ -182,7 +182,7 @@ abParser :: Parser (Char, Char)
 --                    a _ = Nothing
 --                    b ('b':s) = Just ('b', s)
 --                    b _ = Nothing
-abParser = (char 'a' *> pure (\b -> ('a', b))) <*> (char 'b' *> pure 'b')
+abParser = char 'a' *> pure (\b -> ('a', b)) <*> (char 'b' *> pure 'b')
 
 
 -- which expects to see the characters ’a’ and ’b’ and returns them
@@ -193,7 +193,7 @@ abParser = (char 'a' *> pure (\b -> ('a', b))) <*> (char 'b' *> pure 'b')
 -- Nothing
 -- • Now create a parser
 abParser_ :: Parser ()
-abParser_ = (char 'a' *> pure (\b -> ())) <*> (char 'b' *> pure 'b')
+abParser_ = char 'a' *> pure (\b -> ()) <*> (char 'b' *> pure 'b')
 
 -- which acts in the same way as abParser but returns () instead of
 -- the characters ’a’ and ’b’.
