@@ -35,3 +35,15 @@ spec = do
       runParser ident "2bad" `shouldBe` Nothing
     it "empty" $ do
       runParser ident "" `shouldBe` Nothing
+
+  describe "sexpr" $ do
+    it "5" $ do
+      runParser parseSExpr "5" `shouldNotBe` Nothing
+    it "foo3" $ do
+      runParser parseSExpr "foo3" `shouldNotBe` Nothing
+    it "(bar (foo) 3 5 874)" $ do
+      runParser parseSExpr "(bar (foo) 3 5 874)" `shouldNotBe` Nothing
+    it "(((lambda x (lambda y (plus x y))) 3) 5)" $ do
+      runParser parseSExpr "(((lambda x (lambda y (plus x y))) 3) 5)" `shouldNotBe` Nothing
+    it "( lots of ( spaces in ) this ( one ) )" $ do
+      runParser parseSExpr "( lots of ( spaces in ) this ( one ) )" `shouldNotBe` Nothing

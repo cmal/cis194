@@ -21,11 +21,6 @@ import Control.Applicative
 --  1. Parsing repetitions
 ------------------------------------------------------------
 
--- something :: Maybe a -> Bool
--- something
---   | Nothing = False
---   | _ = True
-
 zeroOrMore :: Parser a -> Parser [a]
 zeroOrMore p = oneOrMore p <|> pure []
 
@@ -37,7 +32,7 @@ oneOrMore p = (:) <$> p <*> (zeroOrMore p)
 ------------------------------------------------------------
 
 spaces :: Parser String
-spaces = zeroOrMore (satisfy isSpace)
+spaces = oneOrMore (satisfy isSpace)
 
 ident :: Parser String
 ident = (:) <$> (satisfy isAlpha) <*> zeroOrMore (satisfy isAlphaNum)
@@ -53,10 +48,18 @@ type Ident = String
 
 -- An "atom" is either an integer value or an identifier.
 data Atom = N Integer | I Ident
-  deriving Show
+  deriving (Show, Eq)
 
 -- An S-expression is either an atom, or a list of S-expressions.
 data SExpr = A Atom
            | Comb [SExpr]
-  deriving Show
+  deriving (Show, Eq)
 
+parseAtom :: Parser SExpr
+parseAtom = fmap A $ fmap N posInt <|> fmap I ident
+
+parseSExpr :: Parser SExpr
+parseSExpr = parseAtom <|>
+               zeroOrMore spaces *> (char '(') *>
+               (fmap Comb $ oneOrMore (zeroOrMore spaces *> parseAtom <|> parseSExpr))
+               <* zeroOrMore spaces <* (char ')')
