@@ -76,3 +76,29 @@ mapA f xs = sequenceA (map f xs)
 
 replicateA :: Applicative f => Int -> f a -> f [a]
 replicateA n x = sequenceA $ take n $ repeat x
+
+
+
+-- 1. Implement a Monad instance for the list constructor, []. Follow the types!
+-- 2. Implement a Monad instance for ((->) e).
+-- 3. Implement Functor and Monad instances for Free f, defined as
+-- data Free f a = Var a
+--               | Node (f (Free f a))
+-- You may assume that f has a Functor instance. This is known as the free monad built from the functor f.
+
+instance Monad [] where
+  return = pure
+  (>>=) ma f = concat $ map f ma
+
+
+instance Monad ((->) e) where
+  return = pure
+  (>>=) ma f = ma f mempty
+
+
+data Free f a = Var a
+              | Node (f (Free f a))
+
+instance Functor f => Monad (Free f) where
+  return = undefined
+  (>>=) = undefined
