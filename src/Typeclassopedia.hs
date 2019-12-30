@@ -102,3 +102,54 @@ data Free f a = Var a
 instance Functor f => Monad (Free f) where
   return = undefined
   (>>=) = undefined
+
+
+
+class Foldable t where
+  fold    :: Monoid m => t m -> m
+  fold = foldMap id -- 1. Implement fold in terms of foldMap.
+  -- 2. What would you need in order to implement foldMap in terms of fold?
+  foldMap :: Monoid m => (a -> m) -> t a -> m  
+  -- 3. Implement foldMap in terms of foldr.
+  foldMap f = foldr (mappend . f) mempty -- stolen from GHC source code, Foldable.hs
+  foldr   :: (a -> b -> b) -> b -> t a -> b
+  -- 4. Implement foldr in terms of foldMap (hint: use the Endo monoid).
+  foldr f z t = appEndo (foldMap (Endo #. f) t) z -- stolen from GHC source code, Foldable.hs
+  foldr'  :: (a -> b -> b) -> b -> t a -> b
+  foldl   :: (b -> a -> b) -> b -> t a -> b
+  foldl'  :: (b -> a -> b) -> b -> t a -> b
+  foldr1  :: (a -> a -> a) -> t a -> a
+  foldl1  :: (a -> a -> a) -> t a -> a
+  toList  :: t a -> [a]
+  null    :: t a -> Bool
+  length  :: t a -> Int
+  elem    :: Eq a => a -> t a -> Bool
+  maximum :: Ord a => t a -> a
+  minimum :: Ord a => t a -> a
+  sum     :: Num a => t a -> a
+  product :: Num a => t a -> a
+
+  -- 5. What is the type of foldMap . foldMap? Or foldMap . foldMap . foldMap, etc.? What do they do?
+  foldMap . foldMap
+  -- foldMap :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
+  -- (.) :: (b -> c) -> (a -> b) -> a -> c
+  -- foldMap . foldMap :: 
+  -- b in (.) :: a -> m
+  -- c in (.) :: t a -> m
+  -- a in (.) :: a -> m
+  -- second b in (.) :: t1 a -> m
+
+  -- so first b in (.) :: t2 a -> m
+  -- c in (.) :: t1 (t2 a) -> m
+  -- a -> c in (.) :: (a -> m) -> t1 (t2 a) -> m
+
+  -- from GHCi
+  foldMap . foldMap
+  :: (Monoid m, Foldable t1, Foldable t2) =>
+     (a -> m) -> t1 (t2 a) -> m
+
+  foldMap . foldMap . foldMap
+  :: (Monoid m, Foldable t1, Foldable t2, Foldable t3) =>
+     (a -> m) -> t1 (t2 (t3 a)) -> m
+  -- What do they do? for example
+  -- ( (foldMap . foldMap . foldMap) (:) [[[1],[2]],[[3]]]) []
